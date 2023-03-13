@@ -138,7 +138,7 @@ Formally called 'Aurora GPT', it is a very simple Discord chatbot that was built
    ```sh
    yarn run start
    ```
-   
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -185,9 +185,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/YourAmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some YourAmazingFeature'`)
-4. Push to the Branch (`git push origin feature/YourAmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -240,7 +240,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[JQuery-url]: https://jquery.com
 
 [TypeScript-url]: https://www.typescriptlang.org
 [TypeScript-shield]: https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white
