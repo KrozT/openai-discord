@@ -1,6 +1,7 @@
 import {
   ActivityType, Client, CommandInteraction, IntentsBitField, Interaction, Partials,
 } from 'discord.js';
+import process from 'process';
 import { Logger } from '@/logger';
 import { Runnable } from '@/models/runnable';
 import { AI } from '@/models/ai';
@@ -46,8 +47,9 @@ export class Bot implements Runnable {
   run(): void {
     this._client.login(process.env.DISCORD_API_KEY).then(() => {
       this._logger.service.info('Discord Service has been initialized successfully.');
-    }).catch((reason) => {
-      this._logger.service.error(`Failed to start Discord Service: ${reason}`);
+    }).catch((error) => {
+      this._logger.service.error(`Failed to start Discord Service: ${error}`);
+      process.exit(1);
     });
 
     this._client.on('ready', async () => {
