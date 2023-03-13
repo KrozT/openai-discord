@@ -31,8 +31,12 @@ export class Api implements AI, Runnable {
     const request = await this._api.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: chatHistory,
-    });
+    }).then((response) => response.data.choices[0].message)
+      .catch((error: Error) => {
+        this._logger.service.error(error.message);
+        throw error;
+      });
 
-    return (request.data.choices[0].message as ChatCompletionResponseMessage);
+    return (request as ChatCompletionResponseMessage);
   }
 }

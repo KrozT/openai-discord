@@ -40,7 +40,7 @@ export const ChatCommand: Command = {
     embed.forEach((item) => {
       const message: ChatCompletionRequestMessage = {
         role: item.footer?.text === 'embed-question' ? 'user' : 'assistant',
-        content: item.description || 'Please notify an error in process',
+        content: item.description || 'An error occurred during the process, please try again later.',
       };
 
       chatHistory.push(message);
@@ -52,14 +52,14 @@ export const ChatCommand: Command = {
 
     const currentQuestion: ChatCompletionRequestMessage = {
       role: 'user',
-      content: question || 'Please notify an error in process',
+      content: question || 'An error occurred during the process, please try again later.',
     };
 
     chatHistory.push(currentQuestion);
 
     const answer = await ai?.chatCompletion(chatHistory)
       .then((response) => response.content)
-      .catch((error) => error);
+      .catch((error: Error) => error.message);
 
     await interaction.followUp({
       ephemeral,
