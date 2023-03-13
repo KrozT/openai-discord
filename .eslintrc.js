@@ -1,0 +1,72 @@
+module.exports = {
+  root: true,
+  extends: [
+    // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
+    // ESLint typescript rules
+    'plugin:@typescript-eslint/recommended',
+    'airbnb-base'
+  ],
+  plugins: [
+    // required to apply rules which need type information
+    '@typescript-eslint'
+  ],
+  parserOptions: {
+    project: './tsconfig.eslint.json',
+  },
+  // add your custom rules here
+  rules: {
+    'no-param-reassign': 'off',
+    'no-void': 'off',
+    'no-nested-ternary': 'off',
+    'max-classes-per-file': 'off',
+
+    'no-shadow': 'off',
+    '@typescript-eslint/no-shadow': 'error',
+
+    'import/first': 'off',
+    'import/named': 'error',
+    'import/namespace': 'error',
+    'import/default': 'error',
+    'import/export': 'error',
+    'import/extensions': 'off',
+    'import/no-unresolved': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
+
+    'prefer-promise-reject-errors': 'off',
+
+    quotes: ['warn', 'single', { avoidEscape: true }],
+
+    // this rule, if on, would require explicit return type on the `render` function
+    '@typescript-eslint/explicit-function-return-type': 'off',
+
+    // in plain CommonJS modules, you can't use `import foo = require('foo')` to pass this rule, so it has to be disabled
+    '@typescript-eslint/no-var-requires': 'off',
+
+    // The core 'no-unused-vars' rules (in the eslint:recommended ruleset)
+    // does not work with type definitions
+    'no-unused-vars': 'off',
+
+    // allow console
+    'no-console': 'off',
+
+    // allow underscore for privates
+    'no-underscore-dangle': 'off',
+
+    // allow debugger during development only
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    // allow plusplus in coding style
+    'no-plusplus': 'off',
+
+    // max-len not affect coding style effectivity
+    'max-len': ['error', {
+      'code': 100,
+      'ignoreComments': true,
+      'ignoreUrls': true,
+      'ignoreStrings': true,
+      'ignoreTemplateLiterals': true,
+      'ignoreRegExpLiterals': true,
+    }]
+  }
+};
