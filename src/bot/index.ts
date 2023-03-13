@@ -53,15 +53,15 @@ export class Bot implements Runnable {
     });
 
     this._client.on('ready', async () => {
-      // Set status to listening command
+      if (!this._client.user || !this._client.application) {
+        return;
+      }
+
+      // Set status for show command
       this._client.user?.setActivity({
         name: '/chat',
         type: ActivityType.Listening,
       });
-
-      if (!this._client.user || !this._client.application) {
-        return;
-      }
 
       await this._client.application.commands.set(commands);
     });
