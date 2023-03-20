@@ -166,9 +166,9 @@ just add the chat bot to your server and enjoy.
 
 - [x] Discord Integration
 - [x] OpenAI Integration
-- [x] Context-based single-user usability
-- [ ] Simultaneous context-based multi-user usability
-- [ ] Client-based multi-language UI support
+- [x] Context-based usability
+  - [x] Single user
+  - [ ] Multiple users
 
 See the [open issues](https://github.com/KrozT/openai-discord/issues) for a full list of proposed features (and known issues).
 
