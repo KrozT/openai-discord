@@ -28,8 +28,8 @@ export const ClearCommand: Command = {
       /**
        * Delete the messages one by one if the channel is a DM channel
        */
-      await messages.forEach((message) => {
-        if (message.author.id !== client.user?.id) return;
+      messages.forEach((message) => {
+        if (message.author.id !== client.user?.id) return; // Skip if the message is not from the bot
         message.delete();
       });
     }
