@@ -11,13 +11,13 @@ export const ClearCommand: Command = {
     /**
      * Get the chat history from the channel and filter the messages from the user
      */
-    const channel = client.channels.cache.get(interaction.channelId) as TextChannel;
+    const channel = client.channels.cache.get(interaction.channelId) as TextChannel; // Get the channel from the channel id
     const messages = await channel.messages.fetch({ limit: 100 }); // Get the last 100 messages from the channel
     const consistentMessages = messages
       .filter((x) => x.interaction?.user.id === interaction.user.id);
 
     /**
-     * Delete the messages from the channel
+     * Check if the channel is a guild text channel or a DM channel
      */
     if (channel.type === ChannelType.GuildText) {
       /**

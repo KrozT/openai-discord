@@ -2,7 +2,7 @@ import {
   CommandInteraction,
   Client,
   CommandInteractionOptionResolver,
-  TextChannel, ApplicationCommandType, ApplicationCommandOptionType,
+  TextChannel, ApplicationCommandType, ApplicationCommandOptionType, Colors,
 } from 'discord.js';
 import { ChatCompletionRequestMessage } from 'openai';
 import { Command } from '@/bot/models/command';
@@ -29,7 +29,7 @@ export const ChatCommand: Command = {
     /**
      * Get the chat history from the channel
      */
-    const channel = client.channels.cache.get(interaction.channelId) as TextChannel;
+    const channel = client.channels.cache.get(interaction.channelId) as TextChannel; // Get the channel from the channel id
     const messages = await channel.messages.fetch({ limit: 100 }); // Get the last 100 messages from the channel
 
     /**
@@ -48,8 +48,8 @@ export const ChatCommand: Command = {
        * Create the message object from the embed and add it to the chat history
        */
       const message: ChatCompletionRequestMessage = {
-        role: item.footer?.text === 'embed-question' ? 'user' : 'assistant',
-        content: item.description || 'An error occurred during the process, please try again later.',
+        role: item.footer?.text === 'embed-question' ? 'user' : 'assistant', // Check if the message is a question from the user or an answer from the bot
+        content: item.description || 'An error occurred during the process, please try again later.', // Get the description from the embed or set it to an error message
       };
 
       chatHistory.push(message); // Add the message to the chat history
@@ -58,9 +58,9 @@ export const ChatCommand: Command = {
     /**
      * Get the options from the interaction
      */
-    const interactionResolver = (interaction.options as CommandInteractionOptionResolver);
-    const question = interactionResolver.getString('question') || undefined; // Default to undefined
-    const ephemeral = interactionResolver.getBoolean('ephemeral') || true; // Default to true
+    const interactionResolver = (interaction.options as CommandInteractionOptionResolver); // Get the options from the interaction
+    const question = interactionResolver.getString('question') || undefined; // Get the question from the options or set it to undefined
+    const ephemeral = interactionResolver.getBoolean('ephemeral') || true; // Get the ephemeral option from the options or set it to true
 
     /**
      * Add the current question to the chat history
@@ -76,8 +76,8 @@ export const ChatCommand: Command = {
      * Get the answer from the AI
      */
     const answer = await ai?.chatCompletion(chatHistory)
-      .then((response) => response.content)
-      .catch((error: Error) => error.message);
+      .then((response) => response.content) // Get the content from the response
+      .catch((error: Error) => error.message); // Get the error message from the error
 
     /**
      * Add the current answer to the chat history and reply to the user on the channel
@@ -87,20 +87,28 @@ export const ChatCommand: Command = {
       fetchReply: true,
       embeds: [
         {
-          color: 15844367,
-          title: '✥   Question',
-          description: question,
-          footer: {
-            text: 'embed-question', // embed-question is used to identify is an interaction from user to bot
+          color: Colors.Gold,
+          author: {
+            name: interaction.user.username, // Get the username from the user
+            icon_url: interaction.user.avatarURL() || undefined, // Get the avatar from the user or default to undefined
           },
+          description: question, // Get the question from the user
+          footer: {
+            text: 'embed-question', // Mark the embed as a question from the user
+          },
+          timestamp: new Date().toISOString(), // Add the timestamp to the embed
         },
         {
-          color: 5763719,
-          title: '✥   Answer',
-          description: answer,
-          footer: {
-            text: 'embed-answer', // embed-answer is used to identify is an interaction from bot to user
+          color: Colors.Green,
+          author: {
+            name: client.user?.username || 'Aurora GPT', // Get the username from the bot or default to Aurora GPT
+            icon_url: client.user?.avatarURL() || undefined, // Get the avatar from the bot or default to undefined
           },
+          description: answer, // Get the answer from the AI
+          footer: {
+            text: 'embed-answer', // Mark the embed as an answer from the bot
+          },
+          timestamp: new Date().toISOString(), // Add the timestamp to the embed
         },
       ],
     });
