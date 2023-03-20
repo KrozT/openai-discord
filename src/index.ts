@@ -3,12 +3,12 @@ import { Bot } from '@/bot';
 import { Api } from '@/api';
 
 /**
- * Configure dotenv.
+ * Load environment variables from .env file
  */
 dotenv.config();
 
 /**
- * OpenAI contained in API Module.
+ * OpenAI contained in Api Module.
  */
 const api = new Api();
 api.run();

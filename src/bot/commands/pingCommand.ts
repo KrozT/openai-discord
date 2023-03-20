@@ -7,6 +7,9 @@ export const PingCommand: Command = {
   type: ApplicationCommandType.ChatInput,
   execute: async (client: Client, interaction: CommandInteraction) => {
     const content = 'Pong';
+    /**
+     * Send a message to the channel
+     */
     await interaction.followUp({
       ephemeral: true,
       content,

@@ -4,8 +4,16 @@ import {
 import process from 'process';
 
 export class Logger {
+  /**
+   * Winston logger instance
+   * @protected
+   */
   protected _logger: WinstonLogger;
 
+  /**
+   * Create logger instance
+   * @param serviceName
+   */
   constructor(serviceName: string) {
     this._logger = createLogger({
       level: process.env.NODE_ENV === 'dev' ? 'debug' : 'info',
@@ -23,6 +31,9 @@ export class Logger {
     });
   }
 
+  /**
+   * Get logger instance
+   */
   get service() {
     return this._logger;
   }
