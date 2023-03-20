@@ -153,9 +153,9 @@ just add the chat bot to your server and enjoy.
 ### Commands
 | Command | Description |
 | --- | --- |
-| `/ping` | A very simple ping command |
-| `/chat` | Say anything to the Chat Bot |
-| `/clear` | Delete your interactions with the Chat bot |
+| `/ping` | Ping the bot to check if it is online |
+| `/chat` | Chat with the bot |
+| `/clear` | Clear the chat history with the bot |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

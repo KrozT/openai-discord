@@ -3,7 +3,7 @@ import { Command } from '@/bot/models/command';
 
 export const PingCommand: Command = {
   name: 'ping',
-  description: 'A very simple ping command',
+  description: 'Ping the bot to check if it is online',
   type: ApplicationCommandType.ChatInput,
   execute: async (client: Client, interaction: CommandInteraction) => {
     const content = 'Pong';

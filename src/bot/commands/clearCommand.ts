@@ -5,7 +5,7 @@ import { Command } from '@/bot/models/command';
 
 export const ClearCommand: Command = {
   name: 'clear',
-  description: 'Delete your interactions with the Chat bot',
+  description: 'Clear the chat history with the bot',
   type: ApplicationCommandType.ChatInput,
   execute: async (client: Client, interaction: CommandInteraction) => {
     /**
