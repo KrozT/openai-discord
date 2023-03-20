@@ -91,7 +91,7 @@ export const ChatCommand: Command = {
           title: '✥   Question',
           description: question,
           footer: {
-            text: 'embed-question', // embed-question is used to identify is a response from user to bot
+            text: 'embed-question', // embed-question is used to identify is an interaction from user to bot
           },
         },
         {
@@ -99,7 +99,7 @@ export const ChatCommand: Command = {
           title: '✥   Answer',
           description: answer,
           footer: {
-            text: 'embed-answer', // embed-answer is used to identify is a response from bot to user
+            text: 'embed-answer', // embed-answer is used to identify is an interaction from bot to user
           },
         },
       ],
