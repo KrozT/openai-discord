@@ -88,7 +88,16 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Formally called 'Aurora GPT', it is a very simple Discord chatbot that was built using discord.js and the GPT-3.5-Turbo of OpenAI.
+
+Formally called 'Aurora GPT' is a Discord chatbot that utilizes the GPT-3.5-Turbo language model by OpenAI. Built with discord.js, it generates responses to user input in a conversational format. Designed for simplicity, it's a great tool to explore GPT-3.5-Turbo within Discord.
+
+<details>
+
+<summary>Screenshots</summary>
+
+[![Aurora GPT ScreenShot][product-screenshot]](https://krozt.dev)
+
+</details>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -224,7 +233,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [license-url]: https://github.com/KrozT/openai-discord/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/matias-espinoza-bustos/
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://i.imgur.com/ziUXGFw.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
