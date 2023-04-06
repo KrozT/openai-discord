@@ -1,0 +1,10 @@
+version: '3'
+services:
+  openai-discord:
+    build: .
+    container_name: openai-discord
+    working_dir: /usr/app
+    environment:
+      - DISCORD_API_KEY
+      - OPENAI_API_KEY
+    restart: unless-stopped
