@@ -19,7 +19,6 @@
     "@types/node": "^18.15.0",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
-    "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -31,6 +30,7 @@
   },
   "dependencies": {
     "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3",
     "openai": "^3.2.1",
     "winston": "^3.8.2"
   }
