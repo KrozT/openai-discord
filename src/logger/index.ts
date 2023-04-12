@@ -12,12 +12,17 @@ export class Logger {
 
   /**
    * Create logger instance
-   * @param serviceName
+   * @param serviceName - Name of the service to log
    */
   constructor(serviceName: string) {
+    /**
+     * Create winston logger instance
+     */
     this._logger = createLogger({
       level: process.env.NODE_ENV === 'dev' ? 'debug' : 'info',
-      transports: [new transports.Console()],
+      transports: [
+        new transports.Console(),
+      ],
       format: format.combine(
         format.colorize(),
         format.timestamp(),
@@ -32,9 +37,10 @@ export class Logger {
   }
 
   /**
-   * Get logger instance
+   * Get the logger service instance
+   * @returns {WinstonLogger} - Winston logger instance
    */
-  get service() {
+  get logService(): WinstonLogger {
     return this._logger;
   }
 }

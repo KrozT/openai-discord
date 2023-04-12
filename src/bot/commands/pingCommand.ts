@@ -1,5 +1,5 @@
 import {
-  CommandInteraction, Client, ApplicationCommandType, Colors,
+  ApplicationCommandType, Client, Colors, CommandInteraction, EmbedBuilder,
 } from 'discord.js';
 import { Command } from '@/bot/models/command';
 
@@ -11,23 +11,25 @@ export const PingCommand: Command = {
     /**
      * Create the content for the message and calculate the latency
      */
-    const content = `Client Latency is: **${Date.now() - interaction.createdTimestamp}ms**\nAPI Latency is: **${Date.now() - interaction.createdTimestamp}ms**`;
+    const content = `Interaction Latency is: **${Date.now() - interaction.createdTimestamp}ms**\nDue limitations of OpenAI API the service latency is unknown.`;
 
     /**
-     * Send a message to the channel
+     * Create the embed message
+     */
+    const embed = new EmbedBuilder()
+      .setColor(Colors.Aqua) // Set the color to Aqua
+      .setTitle('Online') // Set the title to Online
+      .setDescription(content) // Set the description to the content
+      .setFooter({ text: 'embed-ping' }) // Mark the message as a ping message
+      .setTimestamp(); // Set the timestamp to the current time
+
+    /**
+     * Send embed message to the channel
      */
     await interaction.followUp({
       ephemeral: true,
       embeds: [
-        {
-          color: Colors.Aqua,
-          title: 'Pong',
-          description: content,
-          timestamp: new Date().toISOString(), // Set the timestamp to the current time
-          footer: {
-            text: 'embed-ping', // Mark the message as a ping message
-          },
-        },
+        embed,
       ],
     });
   },

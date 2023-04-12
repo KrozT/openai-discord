@@ -1,5 +1,5 @@
 import {
-  CommandInteraction, Client, TextChannel, ChannelType, ApplicationCommandType,
+  ApplicationCommandType, ChannelType, Client, CommandInteraction, TextChannel,
 } from 'discord.js';
 import { Command } from '@/bot/models/command';
 

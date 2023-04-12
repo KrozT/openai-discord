@@ -39,8 +39,7 @@
 <h3 align="center">OpenAI Discord</h3>
 
   <p align="center">
-    A very simple Discord Bot that integrates the OpenAI library to make use of ChatGPT
-    <br />
+A simple Discord bot integrating OpenAI libraries for ChatGPT and DALL-E, capable of generating text and images in Discord conversations.    <br />
     <a href="https://github.com/KrozT/openai-discord"><strong>Explore the docs »</strong></a>
     <br />
     <br />
@@ -89,8 +88,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Formally called 'Aurora GPT' is a Discord chatbot that utilizes the GPT-3.5-Turbo language model by OpenAI. Built with discord.js, it generates responses to user input in a conversational format. Designed for simplicity, it's a great tool to explore GPT-3.5-Turbo within Discord.
-
+Formerly known as 'Aurora AI', Aurora AI is a Discord chatbot that utilizes the GPT-3.5-Turbo language model by OpenAI. Built with discord.js, it generates responses to user input in a conversational format. Designed for simplicity, it's a great tool to explore the capabilities of GPT-3.5-Turbo within Discord. Additionally, it also supports the use of DALL-E, the image generation model also developed by OpenAI, allowing it to generate creative images alongside its natural language abilities.
 <details>
 
 <summary>Screenshots</summary>
@@ -111,6 +109,7 @@ Formally called 'Aurora GPT' is a Discord chatbot that utilizes the GPT-3.5-Turb
 - [discord.js](https://github.com/discordjs/discord.js)
 - [winston](https://github.com/winstonjs/winston)
 - [openai-node](https://github.com/openai/openai-node)
+- [dotenv](https://github.com/motdotla/dotenv)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,7 +120,7 @@ Formally called 'Aurora GPT' is a Discord chatbot that utilizes the GPT-3.5-Turb
 
 ### Installation
 
-1. Get a neccesary API Keys
+1. Get a necessary API Keys
 - [OpenAI](https://platform.openai.com/account/api-keys)
 - [Discord](https://platform.openai.com/account/api-keys)
 <br>
@@ -157,7 +156,7 @@ Formally called 'Aurora GPT' is a Discord chatbot that utilizes the GPT-3.5-Turb
 ## Usage
 
 Once you have the project initialized
-just add the chat bot to your server and enjoy.
+just add the bot to your server and enjoy.
 
 ### Commands
 | Command | Description |
@@ -165,6 +164,8 @@ just add the chat bot to your server and enjoy.
 | `/ping` | Ping the bot to check if it is online |
 | `/chat` | Chat with the bot |
 | `/clear` | Clear the chat history with the bot |
+| `/image` | Generate an image with the bot |
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -173,11 +174,19 @@ just add the chat bot to your server and enjoy.
 <!-- ROADMAP -->
 ## Roadmap
 
+- [x] Docker Integration
+  - [x] Dockerfile
+  - [x] Docker Compose
 - [x] Discord Integration
-- [x] OpenAI Integration
+  - [x] Slash Commands
+- [x] GPT Integration
+  - [x] Chat
 - [x] Context-based usability
   - [x] Single user
   - [ ] Multiple users
+- [x] DALL-E Integration
+  - [x] Image generation
+  - [ ] Image editing
 
 See the [open issues](https://github.com/KrozT/openai-discord/issues) for a full list of proposed features (and known issues).
 

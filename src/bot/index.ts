@@ -17,15 +17,21 @@ export class Bot implements Runnable {
   /**
    * AI instance
    * @private
+   * @readonly
    */
   private readonly _ai: AI;
 
   /**
    * Discord API client instance
    * @private
+   * @readonly
    */
   private readonly _client: Client;
 
+  /**
+   * Create Bot instance
+   * @param ai - OpenAI API instance to use for all AI related tasks
+   */
   constructor(ai: AI) {
     this._logger = new Logger(Bot.name);
     this._ai = ai;
@@ -48,7 +54,7 @@ export class Bot implements Runnable {
 
   /**
    * Handle slash commands from Discord API
-   * @param interaction
+   * @param interaction - Interaction from Discord API to handle as slash command (e.g. /help)
    * @private
    */
   private async handleSlashCommand(interaction: CommandInteraction): Promise<void> {
@@ -57,13 +63,13 @@ export class Bot implements Runnable {
      */
     const slashCommand = commands.find((command) => command.name === interaction.commandName);
     if (!slashCommand) {
-      this._logger.service.warning(`SlashCommand [${interaction.commandName}] not found.`);
+      this._logger.logService.warning(`SlashCommand [${interaction.commandName}] not found.`);
       await interaction.followUp({ content: 'An error has occurred' });
       return;
     }
 
     await interaction.deferReply(); // Defer reply to show loading state
-    this._logger.service.debug(`SlashCommand [${interaction.commandName}] executed properly.`); // Log command execution
+    this._logger.logService.debug(`SlashCommand [${interaction.commandName}] executed properly.`); // Log command execution
     await slashCommand.execute(this._client, interaction, this._ai); // Execute command
   }
 
@@ -75,9 +81,9 @@ export class Bot implements Runnable {
      * Login to Discord API and set status for show command if login was successful or exit process if failed
      */
     this._client.login(process.env.DISCORD_API_KEY).then(() => {
-      this._logger.service.info('Discord Service has been initialized successfully.'); // Log service initialization
+      this._logger.logService.info('Discord Service has been initialized successfully.'); // Log service initialization
     }).catch((error) => {
-      this._logger.service.error(`Failed to start Discord Service: ${error}`); // Log service initialization error
+      this._logger.logService.error(`Failed to start Discord Service: ${error}`); // Log service initialization error
       process.exit(1); // Exit process
     });
 

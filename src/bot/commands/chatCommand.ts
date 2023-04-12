@@ -1,11 +1,17 @@
 import {
-  CommandInteraction,
+  ApplicationCommandOptionType,
+  ApplicationCommandType,
   Client,
+  CommandInteraction,
   CommandInteractionOptionResolver,
-  TextChannel, ApplicationCommandType, ApplicationCommandOptionType, Colors,
+  EmbedBuilder,
+  TextChannel,
 } from 'discord.js';
 import { ChatCompletionRequestMessage } from 'openai';
 import { Command } from '@/bot/models/command';
+import { EmbedAuthor } from '@/bot/models/embed';
+import { TextEmbed } from '@/bot/embeds/textEmbed';
+import { ErrorEmbed } from '@/bot/embeds/errorEmbed';
 
 export const ChatCommand: Command = {
   name: 'chat',
@@ -39,16 +45,16 @@ export const ChatCommand: Command = {
     const consistentMessages = messages
       .filter((x) => x.interaction?.user.id === interaction.user.id);
 
-    const embed = consistentMessages.map((message) => message.embeds)
+    const embedInteractions = consistentMessages.map((message) => message.embeds)
       .flatMap((item) => item)
       .flatMap((item) => item.data);
 
-    embed.forEach((item) => {
+    embedInteractions.forEach((item) => {
       /**
        * Create the message object from the embed and add it to the chat history
        */
       const message: ChatCompletionRequestMessage = {
-        role: item.footer?.text === 'embed-question' ? 'user' : 'assistant', // Check if the message is a question from the user or an answer from the bot
+        role: item.footer?.text === 'embed-request' ? 'user' : 'assistant', // Check if the message is a request from the user or a response from the bot
         content: item.description || 'An error occurred during the process, please try again later.', // Get the description from the embed or set it to an error message
       };
 
@@ -73,44 +79,35 @@ export const ChatCommand: Command = {
     chatHistory.push(currentQuestion);
 
     /**
-     * Get the answer from the AI
+     * Embeds array to store the embeds
      */
-    const answer = await ai?.chatCompletion(chatHistory)
-      .then((response) => response.content) // Get the content from the response
-      .catch((error: Error) => error.message); // Get the error message from the error
+    const embeds: EmbedBuilder[] = [];
 
     /**
-     * Add the current answer to the chat history and reply to the user on the channel
+     * Add the question to the embeds array
+     */
+    embeds.push(new TextEmbed(client, interaction, EmbedAuthor.User, question as string));
+
+    /**
+     * Get the answer from the AI
+     */
+    await ai?.chatCompletion(chatHistory)
+      .then((response) => {
+        const responseEmbed = new TextEmbed(client, interaction, EmbedAuthor.Bot, response.content); // Create a new text embed with the response
+        embeds.push(responseEmbed); // Add the response embed to the embeds array
+      }) // Get the content from the response
+      .catch((error: Error) => {
+        const errorEmbed = new ErrorEmbed(client, interaction, error); // Create a new error embed with the error
+        embeds.push(errorEmbed); // Add the error embed to the embeds array
+      });
+
+    /**
+     * Send the embeds to the channel
      */
     await interaction.followUp({
       ephemeral,
       fetchReply: true,
-      embeds: [
-        {
-          color: Colors.Gold,
-          author: {
-            name: interaction.user.username, // Get the username from the user
-            icon_url: interaction.user.avatarURL() || undefined, // Get the avatar from the user or default to undefined
-          },
-          description: question, // Get the question from the user
-          footer: {
-            text: 'embed-question', // Mark the embed as a question from the user
-          },
-          timestamp: new Date().toISOString(), // Add the timestamp to the embed
-        },
-        {
-          color: Colors.Green,
-          author: {
-            name: client.user?.username || 'Aurora GPT', // Get the username from the bot or default to Aurora GPT
-            icon_url: client.user?.avatarURL() || undefined, // Get the avatar from the bot or default to undefined
-          },
-          description: answer, // Get the answer from the AI
-          footer: {
-            text: 'embed-answer', // Mark the embed as an answer from the bot
-          },
-          timestamp: new Date().toISOString(), // Add the timestamp to the embed
-        },
-      ],
+      embeds,
     });
   },
 };
