@@ -130,7 +130,6 @@ Formerly known as 'Aurora AI', Aurora AI is a Discord chatbot that utilizes the 
    - [OpenAI](https://platform.openai.com/account/api-keys)
    - [Discord](https://platform.openai.com/account/api-keys)
    <br>
-   <br>
 
 2. Clone the repo
    ```sh
