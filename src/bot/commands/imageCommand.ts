@@ -13,8 +13,7 @@ import { ErrorEmbed } from '@/bot/embeds/errorEmbed';
 import { TextEmbed } from '@/bot/embeds/textEmbed';
 import { EmbedAuthor } from '@/bot/models/embed';
 
-export let ImageCommand: Command;
-ImageCommand = {
+export const ImageCommand: Command = {
   name: 'image',
   description: 'Get an image from the bot',
   type: ApplicationCommandType.ChatInput,
