@@ -13,7 +13,8 @@ import { ErrorEmbed } from '@/bot/embeds/errorEmbed';
 import { TextEmbed } from '@/bot/embeds/textEmbed';
 import { EmbedAuthor } from '@/bot/models/embed';
 
-export const ImageCommand: Command = {
+export let ImageCommand: Command;
+ImageCommand = {
   name: 'image',
   description: 'Get an image from the bot',
   type: ApplicationCommandType.ChatInput,
@@ -26,13 +27,17 @@ export const ImageCommand: Command = {
     },
     {
       name: 'quantity',
-      description: 'Quantity of images to generate (e.g. 5) (max 10) (default 1)',
+      description: 'Quantity of images to generate (default 1)',
       required: false,
       type: ApplicationCommandOptionType.Number,
+      choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => ({
+        name: number.toString(),
+        value: number,
+      })),
     },
     {
       name: 'size',
-      description: 'Quality of the image (e.g. "512x512") (default "256x256")',
+      description: 'Quality of the image (default "256x256")',
       required: false,
       type: ApplicationCommandOptionType.String,
       choices: [

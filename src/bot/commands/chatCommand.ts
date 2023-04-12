@@ -26,7 +26,7 @@ export const ChatCommand: Command = {
     },
     {
       name: 'ephemeral',
-      description: 'If the response should be ephemeral or not',
+      description: 'Hide the response from other users',
       required: false,
       type: ApplicationCommandOptionType.Boolean,
     },
