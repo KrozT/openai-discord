@@ -9,20 +9,23 @@ export abstract class Embed extends EmbedBuilder {
   /**
    * The client to use for the embed
    * @private
+   * readonly
    */
-  private _client: Client;
+  private readonly _client: Client;
 
   /**
    * The interaction to use for the embed
    * @private
+   * @readonly
    */
-  private _interaction: CommandInteraction;
+  private readonly _interaction: CommandInteraction;
 
   /**
    * The author of the embed
    * @private
+   * @readonly
    */
-  private _author: EmbedAuthor;
+  private readonly _author: EmbedAuthor;
 
   /**
    * Create a new embed with the given parameters
@@ -93,7 +96,7 @@ export abstract class Embed extends EmbedBuilder {
   /**
    * Get the embed author
    */
-  get author(): EmbedAuthor {
-    return this.author;
+  get authorType(): EmbedAuthor {
+    return this._author;
   }
 }
