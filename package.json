@@ -1,6 +1,6 @@
 {
   "name": "openai-discord",
-  "version": "1.10",
+  "version": "1.10.1",
   "description": "A very simple Discord Bot that integrates the OpenAI library to make use of ChatGPT",
   "author": "Matias Espinoza <contact@krozt.dev>",
   "private": true,
