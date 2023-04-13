@@ -1,7 +1,17 @@
-import { ChatInputApplicationCommandData, Client, CommandInteraction } from 'discord.js';
+import {
+  Client,
+  CommandInteraction,
+  SlashCommandBuilder,
+  SlashCommandSubcommandsOnlyBuilder,
+} from 'discord.js';
 import { AI } from '@/models/ai';
 
-export interface Command extends ChatInputApplicationCommandData {
+export interface Command {
+  /**
+   * Command data to register with Discord API
+   */
+  data: | Omit<SlashCommandBuilder, 'addSubcommandGroup' | 'addSubcommand'> | SlashCommandSubcommandsOnlyBuilder;
+
   /**
    * Execute the command with the given parameters
    * @param client - Discord client to use for the command

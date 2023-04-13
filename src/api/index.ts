@@ -16,7 +16,7 @@ export class Api implements AI, Runnable {
    * Logger instance
    * @private
    */
-  private _logger: Logger;
+  private readonly _logger: Logger;
 
   /**
    * OpenAI API instance

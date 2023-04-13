@@ -1,66 +1,50 @@
 import {
-  ApplicationCommandOptionType,
-  ApplicationCommandType,
   Client,
   CommandInteraction,
   CommandInteractionOptionResolver,
-  EmbedBuilder,
+  EmbedBuilder, SlashCommandBuilder, APIApplicationCommandOptionChoice,
 } from 'discord.js';
 import { CreateImageRequestSizeEnum } from 'openai';
 import { Command } from '@/bot/models/command';
 import { ImageEmbed } from '@/bot/embeds/imageEmbed';
-import { ErrorEmbed } from '@/bot/embeds/errorEmbed';
-import { TextEmbed } from '@/bot/embeds/textEmbed';
-import { EmbedAuthor } from '@/bot/models/embed';
+import { EmbedAuthor, EmbedType } from '@/bot/models/embed';
+import { ChatEmbed } from '@/bot/embeds/chatEmbed';
+import { SystemEmbed } from '@/bot/embeds/systemEmbed';
+
+/**
+ * Choices for the quantity option
+ * @type {APIApplicationCommandOptionChoice<number>[]}
+ */
+const quantityChoices:
+  APIApplicationCommandOptionChoice<number>[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    .map((number) => ({ name: number.toString(), value: number }));
+
+/**
+ * Choices for the size option
+ * @type {APIApplicationCommandOptionChoice<string>[]}
+ */
+const sizeChoices:
+  APIApplicationCommandOptionChoice<string>[] = Object.values(CreateImageRequestSizeEnum)
+    .map((size) => ({ name: size, value: size }));
 
 export const ImageCommand: Command = {
-  name: 'image',
-  description: 'Get an image from the bot',
-  type: ApplicationCommandType.ChatInput,
-  options: [
-    {
-      name: 'prompt',
-      description: 'Text to generate the image from (e.g. "A photo of a")',
-      required: true,
-      type: ApplicationCommandOptionType.String,
-    },
-    {
-      name: 'quantity',
-      description: 'Quantity of images to generate (default 1)',
-      required: false,
-      type: ApplicationCommandOptionType.Number,
-      choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((number) => ({
-        name: number.toString(),
-        value: number,
-      })),
-    },
-    {
-      name: 'size',
-      description: 'Quality of the image (default "256x256")',
-      required: false,
-      type: ApplicationCommandOptionType.String,
-      choices: [
-        {
-          name: '256x256',
-          value: CreateImageRequestSizeEnum._256x256,
-        },
-        {
-          name: '512x512',
-          value: CreateImageRequestSizeEnum._512x512,
-        },
-        {
-          name: '1024x1024',
-          value: CreateImageRequestSizeEnum._1024x1024,
-        },
-      ],
-    },
-    {
-      name: 'ephemeral',
-      description: 'If the response should be ephemeral or not',
-      required: false,
-      type: ApplicationCommandOptionType.Boolean,
-    },
-  ],
+  data: new SlashCommandBuilder()
+    .setName('image')
+    .setDescription('Get an image from the AI')
+    .addStringOption((option) => option
+      .setName('prompt')
+      .setDescription('The prompt to generate the image from (e.g. A cat)')
+      .setRequired(true))
+    .addNumberOption((option) => option
+      .setName('quantity')
+      .setDescription('The number of images to generate (default: 1)')
+      .addChoices(...quantityChoices)
+      .setRequired(false))
+    .addStringOption((option) => option
+      .setName('size')
+      .setDescription('The size of the image to generate (default: 256x256)')
+      .addChoices(...sizeChoices)
+      .setRequired(false)),
   execute: async (client: Client, interaction: CommandInteraction, ai) => {
     /**
      * Get the options from the interaction
@@ -69,7 +53,12 @@ export const ImageCommand: Command = {
     const prompt = interactionResolver.getString('prompt') || 'Random'; // Get the prompt option from the options or default to Random
     const quantity = interactionResolver.getNumber('quantity') || 1; // Get the quantity option from the options or default to 1
     const size = interactionResolver.getString('size') || CreateImageRequestSizeEnum._256x256; // Get the size option from the options or default to 256x256
-    const ephemeral = interactionResolver.getBoolean('ephemeral') || true; // Get the ephemeral option from the options or set it to true
+    const ephemeral = interactionResolver.getBoolean('ephemeral') || false; // Get the ephemeral option from the options or default to false
+
+    /**
+     * Adds a loading message to the channel
+     */
+    await interaction.deferReply({ ephemeral }); // Defer the reply to the interaction
 
     /**
      * Embeds array to store the embeds
@@ -77,9 +66,10 @@ export const ImageCommand: Command = {
     const embeds: EmbedBuilder[] = [];
 
     /**
-     * Add the prompt to the embeds array
+     * Create a new prompt embed and add it to the embeds array
      */
-    embeds.push(new TextEmbed(client, interaction, EmbedAuthor.User, prompt));
+    const promptEmbed = new ChatEmbed(client, interaction, EmbedAuthor.User, prompt);
+    embeds.push(promptEmbed);
 
     /**
      * Get the image from the AI
@@ -92,9 +82,17 @@ export const ImageCommand: Command = {
         });
       })
       .catch((error: Error) => {
-        const errorEmbed = new ErrorEmbed(client, interaction, error); // Create a new error embed with the error
+        const errorEmbed = new SystemEmbed(
+          client,
+          interaction,
+          EmbedAuthor.Bot,
+          EmbedType.Error,
+          error.message,
+        ); // Create a new error embed with the error message
         embeds.push(errorEmbed); // Add the error to the embeds array
       });
+
+    console.log(Date.now() - interaction.createdTimestamp);
 
     /**
      * Send the embeds to the channel

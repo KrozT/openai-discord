@@ -1,5 +1,5 @@
 import {
-  ActivityType, Client, CommandInteraction, IntentsBitField, Interaction, Partials,
+  ActivityType, Client, CommandInteraction, IntentsBitField, Interaction, Partials, REST, Routes,
 } from 'discord.js';
 import process from 'process';
 import { Logger } from '@/logger';
@@ -11,8 +11,9 @@ export class Bot implements Runnable {
   /**
    * Logger instance
    * @private
+   * @readonly
    */
-  private _logger: Logger;
+  private readonly _logger: Logger;
 
   /**
    * AI instance
@@ -61,14 +62,13 @@ export class Bot implements Runnable {
     /**
      * Find command by name and execute it if found or return error message
      */
-    const slashCommand = commands.find((command) => command.name === interaction.commandName);
+    const slashCommand = commands.find((command) => command.data.name === interaction.commandName);
     if (!slashCommand) {
       this._logger.logService.warning(`SlashCommand [${interaction.commandName}] not found.`);
       await interaction.followUp({ content: 'An error has occurred' });
       return;
     }
 
-    await interaction.deferReply(); // Defer reply to show loading state
     this._logger.logService.debug(`SlashCommand [${interaction.commandName}] executed properly.`); // Log command execution
     await slashCommand.execute(this._client, interaction, this._ai); // Execute command
   }
@@ -81,7 +81,7 @@ export class Bot implements Runnable {
      * Login to Discord API and set status for show command if login was successful or exit process if failed
      */
     this._client.login(process.env.DISCORD_API_KEY).then(() => {
-      this._logger.logService.info('Discord Service has been initialized successfully.'); // Log service initialization
+      this._logger.logService.info('Discord Client has been initialized successfully.'); // Log service initialization
     }).catch((error) => {
       this._logger.logService.error(`Failed to start Discord Service: ${error}`); // Log service initialization error
       process.exit(1); // Exit process
@@ -96,17 +96,30 @@ export class Bot implements Runnable {
       }
 
       /**
-       * Set status for show command
+       * Create Discord API REST instance and register slash commands if successful or exit process if failed
        */
-      this._client.user?.setActivity({
-        name: '/chat',
-        type: ActivityType.Listening,
-      });
+      try {
+        const availableCommands = commands.map((command) => command.data.toJSON());
+        const rest = new REST().setToken(process.env.DISCORD_API_KEY as string);
+
+        await rest.put(
+          Routes.applicationCommands(this._client.application.id),
+          { body: availableCommands },
+        );
+
+        this._logger.logService.info(`Discord API REST [${availableCommands.length}] commands registered successfully.`);
+      } catch (error) {
+        this._logger.logService.error(`Failed to start Discord API REST: ${error}`);
+        process.exit(1); // Exit process
+      }
 
       /**
-       * Set slash commands for bot application
+       * Set activity status for show command
        */
-      await this._client.application.commands.set(commands);
+      this._client.user?.setActivity({
+        name: 'I help anytime!',
+        type: ActivityType.Listening,
+      });
     });
 
     /**
