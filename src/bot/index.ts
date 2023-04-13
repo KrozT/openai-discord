@@ -117,7 +117,7 @@ export class Bot implements Runnable {
        * Set activity status for show command
        */
       this._client.user?.setActivity({
-        name: 'I help anytime!',
+        name: '/help',
         type: ActivityType.Listening,
       });
     });
