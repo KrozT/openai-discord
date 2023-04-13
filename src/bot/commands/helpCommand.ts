@@ -4,7 +4,7 @@ import {
 import { Command } from '@/bot/models/command';
 import { SystemEmbed } from '@/bot/embeds/systemEmbed';
 import { EmbedAuthor, EmbedType } from '@/bot/models/embed';
-import {commands} from "@/bot/commands/index";
+import { commands } from '@/bot/commands/index';
 
 export const HelpCommand: Command = {
   data: new SlashCommandBuilder()
