@@ -15,7 +15,7 @@ export class SystemEmbed extends Embed {
     interaction: CommandInteraction,
     author: EmbedAuthor.None | EmbedAuthor.Bot,
     type: EmbedType.Info | EmbedType.Error,
-    message: string,
+    message: string | undefined = undefined,
   ) {
     /**
      * Call the super constructor to initialize the embed
@@ -23,8 +23,10 @@ export class SystemEmbed extends Embed {
     super(client, interaction, author, type);
 
     /**
-     * Set the embed properties
+     * Set the description of the embed if a message was provided
      */
-    this.setDescription(message); // Set the embed description to the text
+    if (message) {
+      this.setDescription(message);
+    }
   }
 }

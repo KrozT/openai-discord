@@ -166,22 +166,23 @@ Once you have the project initialized
 just add the bot to your server and enjoy.
 
 ### Commands
-| Command  | Options                                | Description                           |
-|----------|----------------------------------------|---------------------------------------|
-| `/ping`  | `ephimeral`                            | Ping the bot to check if it is online |
-| `/about` | `ephimeral`                            | Get information about the bot         |
-| `/chat`  | `question` `ephimeral`                 | Chat with the bot                     |
-| `/clear` | None                                   | Clear the chat history with the bot   |
-| `/image` | `prompt` `quantity` `size` `ephimeral` | Generate an image with the bot        |
+| Command  | Options                                | Type                             | Description                           |
+|----------|----------------------------------------|----------------------------------|---------------------------------------|
+| `/ping`  | `ephimeral`                            | `embed-info`                     | Ping the bot to check if it is online |
+| `/about` | `ephimeral`                            | `embed-info`                     | Get information about the bot         |
+| `/help`  | `ephimeral`                            | `embed-info`                     | Get a list of commands                |
+| `/chat`  | `question` `ephimeral`                 | `embed-request` `embed-response` | Chat with the bot                     |
+| `/clear` | None                                   | `embed-info`                     | Clear the chat history with the bot   |
+| `/image` | `prompt` `quantity` `size` `ephimeral` | `embed-request` `embed-response` | Generate an image with the bot        |
 
 #### Options
-| Option      | Command                  | Required | Default   | Choices                         | Description                         |
-|-------------|--------------------------|----------|-----------|---------------------------------|-------------------------------------|
-| `question`  | `/chat`                  | `true`   | None      | None                            | The question to ask the bot         |
-| `prompt`    | `/image`                 | `true`   | None      | None                            | The text to generate the image from |
-| `quantity`  | `/image`                 | `false`  | `1`       | `1` to `10`                     | Quantity of images to generate      |
-| `size`      | `/image`                 | `false`  | `256x256` | `256x256` `512x512` `1024x1024` | Size of the image to generate       |
-| `ephimeral` | `/chat` `/image` `/ping` | `false`  | `false`   | `true` `false`                  | Hide the response from other users  |
+| Option      | Command                                   | Required | Default   | Choices                         | Description                         |
+|-------------|-------------------------------------------|----------|-----------|---------------------------------|-------------------------------------|
+| `question`  | `/chat`                                   | `true`   | None      | None                            | The question to ask the bot         |
+| `prompt`    | `/image`                                  | `true`   | None      | None                            | The text to generate the image from |
+| `quantity`  | `/image`                                  | `false`  | `1`       | `1` to `10`                     | Quantity of images to generate      |
+| `size`      | `/image`                                  | `false`  | `256x256` | `256x256` `512x512` `1024x1024` | Size of the image to generate       |
+| `ephimeral` | `/ping` `/about` `/help` `/chat` `/image` | `false`  | `false`   | `true` `false`                  | Hide the response from other users  |
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
