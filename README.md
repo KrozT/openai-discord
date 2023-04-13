@@ -169,6 +169,7 @@ just add the bot to your server and enjoy.
 | Command  | Options                                | Description                           |
 |----------|----------------------------------------|---------------------------------------|
 | `/ping`  | `ephimeral`                            | Ping the bot to check if it is online |
+| `/about` | `ephimeral`                            | Get information about the bot         |
 | `/chat`  | `question` `ephimeral`                 | Chat with the bot                     |
 | `/clear` | None                                   | Clear the chat history with the bot   |
 | `/image` | `prompt` `quantity` `size` `ephimeral` | Generate an image with the bot        |
