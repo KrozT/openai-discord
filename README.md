@@ -37,7 +37,7 @@
   </a>
 
 <h3 align="center">OpenAI Discord</h3>
-<h6 align="center">**1.10.1**</h4>
+<h5 align="center">1.10.1</h4>
 
   <p align="center">
 A simple Discord bot integrating OpenAI libraries for ChatGPT and DALL-E, capable of generating text and images in Discord conversations.    <br />
