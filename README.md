@@ -37,6 +37,7 @@
   </a>
 
 <h3 align="center">OpenAI Discord</h3>
+<h6 align="center">**1.10.1**</h4>
 
   <p align="center">
 A simple Discord bot integrating OpenAI libraries for ChatGPT and DALL-E, capable of generating text and images in Discord conversations.    <br />
@@ -170,7 +171,7 @@ just add the bot to your server and enjoy.
 |----------|----------------------------------------|----------------------------------|---------------------------------------|
 | `/ping`  | `ephimeral`                            | `embed-info`                     | Ping the bot to check if it is online |
 | `/about` | `ephimeral`                            | `embed-info`                     | Get information about the bot         |
-| `/help`  | `ephimeral`                            | `embed-info`                     | Get a list of commands                |
+| `/help`  | `ephimeral`                            | `embed-info`                     | Get a list of all the commands        |
 | `/chat`  | `question` `ephimeral`                 | `embed-request` `embed-response` | Chat with the bot                     |
 | `/clear` | None                                   | `embed-info`                     | Clear the chat history with the bot   |
 | `/image` | `prompt` `quantity` `size` `ephimeral` | `embed-request` `embed-response` | Generate an image with the bot        |
@@ -214,8 +215,10 @@ The bot uses a variety of visual embeds code located in the footer of each messa
     - [x] Ephemeral (Optional)
   - [x] Direct Messages
     - [x] Ephemeral (Optional)
-- [x] GPT Integration
-  - [x] Chat
+- [x] Language Model Integration
+  - [x] GPT-3.5
+    - [x] Chat
+  - [ ] GPT-4
 - [x] DALL-E Integration
   - [x] Image generation
   - [ ] Image editing

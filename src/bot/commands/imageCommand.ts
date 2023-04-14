@@ -92,8 +92,6 @@ export const ImageCommand: Command = {
         embeds.push(errorEmbed); // Add the error to the embeds array
       });
 
-    console.log(Date.now() - interaction.createdTimestamp);
-
     /**
      * Send the embeds to the channel
      */

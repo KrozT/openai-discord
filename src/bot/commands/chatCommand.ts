@@ -116,7 +116,6 @@ export const ChatCommand: Command = {
         embeds.push(errorEmbed); // Add the error embed to the embeds array
       });
 
-    console.log(Date.now() - interaction.createdTimestamp);
     /**
      * Send the embeds to the channel
      */

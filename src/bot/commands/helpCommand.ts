@@ -9,7 +9,7 @@ import { commands } from '@/bot/commands/index';
 export const HelpCommand: Command = {
   data: new SlashCommandBuilder()
     .setName('help')
-    .setDescription('Get information about the bot')
+    .setDescription('Get a list of all the commands')
     .addBooleanOption((option) => option
       .setName('ephemeral')
       .setDescription('Hide the response from other users')
@@ -31,7 +31,7 @@ export const HelpCommand: Command = {
      */
     const embed = new SystemEmbed(client, interaction, EmbedAuthor.None, EmbedType.Info);
     embed.setTitle('Help');
-    embed.setDescription('Here is a list of all the commands you can use with this bot\n\b');
+    embed.setDescription('Here is a list of all the commands you can use with this bot:\n\b');
 
     /**
      * Add all the commands to the embed except itself
