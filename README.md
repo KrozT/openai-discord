@@ -33,11 +33,16 @@
 <br />
 <div align="center">
   <a>
-    <img src="https://i.imgur.com/2UDLbNX.png" alt="Logo" width="300" height="220">
+    <img src="https://i.imgur.com/aqhWIDI.png" alt="Logo" width="180" height="180">
   </a>
 
 <h3 align="center">OpenAI Discord</h3>
-<h5 align="center">1.10.1</h4>
+
+<div align="center">
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d6c618e969974283b69ba6cb9e16bbd5)](https://app.codacy.com/gh/KrozT/openai-discord/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
+</div>
 
   <p align="center">
 A simple Discord bot integrating OpenAI libraries for ChatGPT and DALL-E, capable of generating text and images in Discord conversations.    <br />
