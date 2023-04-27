@@ -11,7 +11,8 @@
     "@typescript-eslint"
   ],
   "parserOptions": {
-    "project": "./tsconfig.eslint.json"
+    // required to parse typescript files
+    "parser": "@typescript-eslint/parser"
   },
   // add your custom rules here
   "rules": {
@@ -35,9 +36,7 @@
 
     "prefer-promise-reject-errors": "off",
 
-    "quotes": [
-      "warn", "single",
-      {
+    "quotes": ["warn", "single", {
         "avoidEscape": true
       }
     ],
@@ -62,9 +61,7 @@
     "no-plusplus": "off",
 
     // max-len not affect coding style effectivity
-    "max-len": [
-      "error",
-      {
+    "max-len": ["error", {
         "code": 100,
         "ignoreComments": true,
         "ignoreUrls": true,
