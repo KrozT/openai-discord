@@ -139,24 +139,24 @@ Formerly known as 'Aurora AI', Aurora AI is a Discord chatbot that utilizes the 
    <br>
 
 2. Clone the repo
-   ```sh
+   ```shell
    git clone https://github.com/KrozT/openai-discord.git
    ```
 3. Install packages
-   ```sh
+   ```shell
    yarn install
    ```
 4. Add the API Keys to your environment variables
-   ```sh
+   ```dotenv
    DISCORD_API_KEY='YOUR DISCORD API KEY'
    OPENAI_API_KEY='YOUR OPENAI API KEY'
    ```
 5. Build project
-   ```sh
+   ```shell
    yarn run build
    ```
 6. Start binaries
-   ```sh
+   ```shell
    yarn run start
    ```
 
