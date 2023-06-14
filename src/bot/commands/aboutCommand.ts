@@ -4,25 +4,12 @@ import { SystemEmbed } from '@/bot/embeds/systemEmbed';
 import { EmbedAuthor, EmbedType } from '@/bot/models/embed';
 
 export class AboutCommand extends Command {
-  constructor() {
-    /**
-     * Call the parent constructor
-     */
-    super();
-
-    /**
-     * Set command data for Discord API
-     */
+  public configure(): void {
     this.setName('about');
     this.setDescription('About the bot');
     this.addEphemeralOption(); // Add the ephemeral option to the command
   }
 
-  /**
-   * Execute the command with the given interaction
-   * @param client
-   * @param interaction
-   */
   protected async execute(client: Client, interaction: CommandInteraction): Promise<void> {
     /**
      * Defer the reply to the interaction

@@ -4,15 +4,7 @@ import { SystemEmbed } from '@/bot/embeds/systemEmbed';
 import { EmbedAuthor, EmbedType } from '@/bot/models/embed';
 
 export class ClearCommand extends Command {
-  constructor() {
-    /**
-     * Call the parent constructor
-     */
-    super();
-
-    /**
-     * Set command data for Discord API
-     */
+  public configure(): void {
     this.setName('clear');
     this.setDescription('Clear the chat history with the bot');
     this.addNumberOption((option) => option

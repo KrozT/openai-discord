@@ -4,15 +4,7 @@ import { SystemEmbed } from '@/bot/embeds/systemEmbed';
 import { EmbedAuthor, EmbedType } from '@/bot/models/embed';
 
 export class HelpCommand extends Command {
-  constructor() {
-    /**
-     * Call the parent constructor
-     */
-    super();
-
-    /**
-     * Set command data for Discord API
-     */
+  public configure(): void {
     this.setName('help');
     this.setDescription('Get all the commands available');
     this.addEphemeralOption(); // Add the ephemeral option to the command

@@ -87,6 +87,7 @@ A simple Discord bot integrating OpenAI libraries for ChatGPT and DALL-E, capabl
         <li><a href="#embeds">Embeds</a></li>
       </ul>
     </li>
+    <li><a href="#commands-api">Commands API</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -187,7 +188,7 @@ just add the bot to your server and enjoy.
 |-------------|-------------------------------------------|----------|-----------|---------------------------------|-------------------------------------|
 | `question`  | `/chat`                                   | `true`   | None      | None                            | The question to ask the bot         |
 | `prompt`    | `/image`                                  | `true`   | None      | None                            | The text to generate the image from |
-| `quantity`  | `/image`                                  | `false`  | `100`     | `1` to `10`                     | Quantity of images to generate      |
+| `quantity`  | `/image`                                  | `false`  | `1`       | `1` to `10`                     | Quantity of images to generate      |
 | `size`      | `/image`                                  | `false`  | `256x256` | `256x256` `512x512` `1024x1024` | Size of the image to generate       |
 | `amount`    | `/clear`                                  | `false`  | `100`     | `1` to `100`                    | Amount of messages to clear         |
 | `ephimeral` | `/ping` `/about` `/help` `/chat` `/image` | `false`  | `false`   | `true` `false`                  | Hide the response from other users  |
@@ -207,6 +208,33 @@ The bot uses a variety of visual embeds code located in the footer of each messa
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Commands API
+
+You can add new commands to the project by following these steps:
+
+1. Create a new file in the `src/bot/commands` folder with the name of the command you want to add (e.g. `testCommand.ts`).
+2. Write a class that extends the `Command` and implements all the methods.
+3. Your command will be automatically added to the bot.
+
+Command example:
+```ts
+import { Command } from '@/bot/models/command';
+import { Client, CommandInteraction } from 'discord.js';
+
+export class TestCommand extends Command {
+    public configure(): void {
+        this.setName('test');
+        this.setDescription('Test command');
+        this.addEphemeralOption(); // Add the ephemeral option to the command
+    }
+
+    protected async execute(client: Client, interaction: CommandInteraction): Promise<void> {
+        await interaction.reply({content: 'Test command executed', ephemeral: this.ephermeral});
+    }
+}
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- ROADMAP -->

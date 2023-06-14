@@ -27,6 +27,12 @@ export abstract class Command extends SlashCommandBuilder {
   protected _interactionResolver!: CommandInteractionOptionResolver;
 
   /**
+   * Configure the command without using the constructor on child classes
+   * @public
+   */
+  public abstract configure(): void;
+
+  /**
    * Add Ephemeral option to command
    * @protected
    */

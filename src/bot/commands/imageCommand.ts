@@ -10,15 +10,7 @@ import { AI } from '@/models/ai';
 import { ChatEmbed } from '@/bot/embeds/chatEmbed';
 
 export class ImageCommand extends Command {
-  constructor() {
-    /**
-     * Call the parent constructor
-     */
-    super();
-
-    /**
-     * Set command data for Discord API
-     */
+  public configure(): void {
     this.setName('image');
     this.setDescription('Generate an image with the prompt provided');
     this.addStringOption((option) => option

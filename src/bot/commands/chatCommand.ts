@@ -7,15 +7,7 @@ import { ChatEmbed } from '@/bot/embeds/chatEmbed';
 import { SystemEmbed } from '@/bot/embeds/systemEmbed';
 
 export class ChatCommand extends Command {
-  constructor() {
-    /**
-     * Call the parent constructor
-     */
-    super();
-
-    /**
-     * Set command data for Discord API
-     */
+  public configure(): void {
     this.setName('chat');
     this.setDescription('Chat with the bot');
     this.addStringOption((option) => option
@@ -79,33 +71,33 @@ export class ChatCommand extends Command {
     chatHistory.push(currentQuestion);
 
     /**
-     * Embeds array to store the embeds
+     * Embeds array with initial embed for the question
      */
-    const embeds: EmbedBuilder[] = [];
-
-    /**
-     * Create the question embed and add it to the embeds array
-     */
-    const questionEmbed = new ChatEmbed(client, interaction, EmbedAuthor.User, question as string);
-    embeds.push(questionEmbed);
+    const embeds: EmbedBuilder[] = [
+      new ChatEmbed(client, interaction, EmbedAuthor.User, question as string),
+    ];
 
     /**
      * Get the answer from the AI
      */
     await ai?.chatCompletion(chatHistory)
       .then((response) => {
-        const responseEmbed = new ChatEmbed(client, interaction, EmbedAuthor.Bot, response.content); // Create a new text embed with the response
-        embeds.push(responseEmbed); // Add the response embed to the embeds array
+        /**
+         * Add the response to the embeds array
+         */
+        embeds.push(new ChatEmbed(client, interaction, EmbedAuthor.Bot, response.content));
       }) // Get the content from the response
       .catch((error: Error) => {
-        const errorEmbed = new SystemEmbed(
+        /**
+         * Add the error to the embeds array
+         */
+        embeds.push(new SystemEmbed(
           client,
           interaction,
           EmbedAuthor.Bot,
           EmbedType.Error,
           error.message,
-        ); // Create a new error embed with the error message
-        embeds.push(errorEmbed); // Add the error embed to the embeds array
+        ));
       });
 
     /**

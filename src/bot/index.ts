@@ -99,6 +99,7 @@ export class Bot implements Runnable {
           const ImportedCommand = module[exportedKey];
           if (typeof ImportedCommand === 'function' && ImportedCommand.prototype instanceof Command) {
             const commandInstance = new ImportedCommand(); // Create command instance
+            commandInstance.configure(); // Configure command
             loadedCommands.push(commandInstance); // Add command to the container
           }
         });
