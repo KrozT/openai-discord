@@ -120,9 +120,10 @@ Formerly known as 'Aurora AI', Aurora AI is a Discord chatbot that utilizes the 
 
 ### Packages
 - [discord.js](https://github.com/discordjs/discord.js)
-- [winston](https://github.com/winstonjs/winston)
-- [openai-node](https://github.com/openai/openai-node)
 - [dotenv](https://github.com/motdotla/dotenv)
+- [fs-extra](https://github.com/jprichardson/node-fs-extra)
+- [openai-node](https://github.com/openai/openai-node)
+- [winston](https://github.com/winstonjs/winston)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -144,20 +145,20 @@ Formerly known as 'Aurora AI', Aurora AI is a Discord chatbot that utilizes the 
    ```
 3. Install packages
    ```shell
-   yarn install
+   pnpm install
    ```
 4. Add the API Keys to your environment variables
    ```dotenv
-   DISCORD_API_KEY='YOUR DISCORD API KEY'
-   OPENAI_API_KEY='YOUR OPENAI API KEY'
+   DISCORD_API_KEY=<YOUR DISCORD API KEY>
+   OPENAI_API_KEY=<YOUR OPENAI API KEY>
    ```
 5. Build project
    ```shell
-   yarn run build
+   pnpm run build
    ```
 6. Start binaries
    ```shell
-   yarn run start
+   pnpm run start
    ```
 
 
@@ -172,22 +173,23 @@ Once you have the project initialized
 just add the bot to your server and enjoy.
 
 ### Commands
-| Command  | Options                                | Type                             | Description                           |
-|----------|----------------------------------------|----------------------------------|---------------------------------------|
-| `/ping`  | `ephimeral`                            | `embed-info`                     | Ping the bot to check if it is online |
-| `/about` | `ephimeral`                            | `embed-info`                     | Get information about the bot         |
-| `/help`  | `ephimeral`                            | `embed-info`                     | Get a list of all the commands        |
-| `/chat`  | `question` `ephimeral`                 | `embed-request` `embed-response` | Chat with the bot                     |
-| `/clear` | None                                   | `embed-info`                     | Clear the chat history with the bot   |
-| `/image` | `prompt` `quantity` `size` `ephimeral` | `embed-request` `embed-response` | Generate an image with the bot        |
+| Command  | Options                                | Type                             | Description                                |
+|----------|----------------------------------------|----------------------------------|--------------------------------------------|
+| `/ping`  | `ephimeral`                            | `embed-info`                     | Ping the bot to check if it is online      |
+| `/about` | `ephimeral`                            | `embed-info`                     | Get information about the bot              |
+| `/help`  | `ephimeral`                            | `embed-info`                     | Get a list of all the commands             |
+| `/chat`  | `question` `ephimeral`                 | `embed-request` `embed-response` | Chat with the bot                          |
+| `/clear` | `amount`                               | `embed-info`                     | Clear the chat history with the bot        |
+| `/image` | `prompt` `quantity` `size` `ephimeral` | `embed-request` `embed-response` | Generate an image with the prompt provided |
 
 #### Options
 | Option      | Command                                   | Required | Default   | Choices                         | Description                         |
 |-------------|-------------------------------------------|----------|-----------|---------------------------------|-------------------------------------|
 | `question`  | `/chat`                                   | `true`   | None      | None                            | The question to ask the bot         |
 | `prompt`    | `/image`                                  | `true`   | None      | None                            | The text to generate the image from |
-| `quantity`  | `/image`                                  | `false`  | `1`       | `1` to `10`                     | Quantity of images to generate      |
+| `quantity`  | `/image`                                  | `false`  | `100`     | `1` to `10`                     | Quantity of images to generate      |
 | `size`      | `/image`                                  | `false`  | `256x256` | `256x256` `512x512` `1024x1024` | Size of the image to generate       |
+| `amount`    | `/clear`                                  | `false`  | `100`     | `1` to `100`                    | Amount of messages to clear         |
 | `ephimeral` | `/ping` `/about` `/help` `/chat` `/image` | `false`  | `false`   | `true` `false`                  | Hide the response from other users  |
 
 
@@ -285,8 +287,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 [license-url]: https://github.com/KrozT/openai-discord/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/matias-espinoza-bustos/
-[product-screenshot-1]: https://i.imgur.com/0FzqYbG.png
-[product-screenshot-2]: https://i.imgur.com/d5FmbGp.png
+[product-screenshot-1]: https://i.imgur.com/7htpBfP.png
+[product-screenshot-2]: https://i.imgur.com/klnL7X4.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB

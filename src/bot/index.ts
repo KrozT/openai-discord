@@ -2,10 +2,11 @@ import {
   ActivityType, Client, CommandInteraction, IntentsBitField, Interaction, Partials, REST, Routes,
 } from 'discord.js';
 import process from 'process';
+import fs from 'fs-extra';
 import { Logger } from '@/logger';
 import { Runnable } from '@/models/runnable';
 import { AI } from '@/models/ai';
-import { commands } from '@/bot/commands';
+import { Command } from '@/bot/models/command';
 
 export class Bot implements Runnable {
   /**
@@ -30,6 +31,12 @@ export class Bot implements Runnable {
   private readonly _client: Client;
 
   /**
+   * Discord Command instances
+   * @private
+   */
+  private _commands: Command[] = [];
+
+  /**
    * Create Bot instance
    * @param ai - OpenAI API instance to use for all AI related tasks
    */
@@ -51,6 +58,55 @@ export class Bot implements Runnable {
         Partials.Channel, // For DMs
       ],
     });
+
+    /**
+     * Load and initialize all the commands contained in the commands folder
+     */
+    this.loadAndInitializeCommandsFromFolder(`${__dirname}/commands`).then((commands) => {
+      this._commands = commands;
+    }).catch((error) => {
+      this._logger.logService.error(`Failed to load and initialize commands: ${error}`);
+      process.exit(1);
+    });
+  }
+
+  /**
+   * Load and initialize all the commands existing in the commands folder
+   * @private
+   */
+  private async loadAndInitializeCommandsFromFolder(folderPath: string): Promise<Command[]> {
+    /**
+     * Get all the files in the commands folder
+     */
+    const files = await fs.readdir(folderPath);
+    const tsFiles = files.filter((file) => file.endsWith('js') // For compiled files on production
+      || file.endsWith('.ts') || file.endsWith('.tsx')); // For source files on development
+
+    /**
+     * Command classes container to return
+     */
+    const loadedCommands: Command[] = [];
+
+    /**
+     * Load all the commands from the files in the commands folder
+     */
+    await Promise.all(
+      tsFiles.map(async (file) => {
+        const filePath = `${folderPath}/${file}`;
+        const module = await import(filePath);
+
+        Object.keys(module).forEach((exportedKey) => {
+          const ImportedCommand = module[exportedKey];
+          if (typeof ImportedCommand === 'function' && ImportedCommand.prototype instanceof Command) {
+            const commandInstance = new ImportedCommand(); // Create command instance
+            loadedCommands.push(commandInstance); // Add command to the container
+          }
+        });
+      }),
+    );
+
+    this._logger.logService.debug(`Loaded ${loadedCommands.length} available commands and initialized them.`);
+    return loadedCommands;
   }
 
   /**
@@ -62,7 +118,8 @@ export class Bot implements Runnable {
     /**
      * Find command by name and execute it if found or return error message
      */
-    const slashCommand = commands.find((command) => command.data.name === interaction.commandName);
+    const slashCommand = this._commands
+      .find((command) => command.name === interaction.commandName);
     if (!slashCommand) {
       this._logger.logService.warning(`SlashCommand [${interaction.commandName}] not found.`);
       await interaction.followUp({ content: 'An error has occurred' });
@@ -70,7 +127,7 @@ export class Bot implements Runnable {
     }
 
     this._logger.logService.debug(`SlashCommand [${interaction.commandName}] executed properly.`); // Log command execution
-    await slashCommand.execute(this._client, interaction, this._ai); // Execute command
+    await slashCommand.executeCommand(this._client, interaction, this._ai);
   }
 
   /**
@@ -99,7 +156,7 @@ export class Bot implements Runnable {
        * Create Discord API REST instance and register slash commands if successful or exit process if failed
        */
       try {
-        const availableCommands = commands.map((command) => command.data.toJSON());
+        const availableCommands = this._commands.map((command) => command.toJSON());
         const rest = new REST().setToken(process.env.DISCORD_API_KEY as string);
 
         await rest.put(
