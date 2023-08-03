@@ -218,8 +218,8 @@ You can add new commands to the project by following these steps:
 
 Command example:
 ```ts
-import { Command } from '@/bot/models/command';
 import { Client, CommandInteraction } from 'discord.js';
+import { Command } from '@/bot/models/command';
 
 export class TestCommand extends Command {
     public configure(): void {
